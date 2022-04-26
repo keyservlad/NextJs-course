@@ -3,18 +3,19 @@ import styles from "../styles/Home.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-export default function About() {
+export default function About({data}) {
   const [state, setState] = useState({
-    name: "No-Name",
+    name: data.name,
   });
-  useEffect(() => {
-    console.log("Component loaded");
-    axios.get("https://pokeapi.co/api/v2/pokemon/pikachu").then((response) => {
-      setState({
-        name: response.data.name,
-      }); 
-    });
-  }, []);
+  // client-side rendering
+  //   useEffect(() => {
+  //     console.log("Component loaded");
+  //     axios.get("https://pokeapi.co/api/v2/pokemon/pikachu").then((response) => {
+  //       setState({
+  //         name: response.data.name,
+  //       });
+  //     });
+  //   }, []);
 
   return (
     <div className={styles.container}>
@@ -28,4 +29,25 @@ export default function About() {
       <p>This is the Pokemon page</p>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  // Call an external API endpoint to get posts.
+  // You can use any data fetching library
+  const res = await fetch("https://pokeapi.co/api/v2/pokemon/pikachu");
+  const data = await res.json();
+
+//   axios.get("https://pokeapi.co/api/v2/pokemon/pikachu").then((response) => {
+//     setState({
+//       name: response.data.name,
+//     });
+//   });
+
+  // By returning { props: { posts } }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+      data,
+    },
+  };
 }
