@@ -17,6 +17,7 @@ export default function About({data}) {
   //     });
   //   }, []);
 
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -31,23 +32,39 @@ export default function About({data}) {
   );
 }
 
-export async function getStaticProps() {
-  // Call an external API endpoint to get posts.
-  // You can use any data fetching library
-  const res = await fetch("https://pokeapi.co/api/v2/pokemon/pikachu");
-  const data = await res.json();
+// static site generation
 
-//   axios.get("https://pokeapi.co/api/v2/pokemon/pikachu").then((response) => {
-//     setState({
-//       name: response.data.name,
-//     });
-//   });
+// export async function getStaticProps() {
+//   // Call an external API endpoint to get posts.
+//   // You can use any data fetching library
+//   const res = await fetch("https://pokeapi.co/api/v2/pokemon/pikachu");
+//   const data = await res.json();
 
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-      data,
-    },
-  };
+// //   axios.get("https://pokeapi.co/api/v2/pokemon/pikachu").then((response) => {
+// //     setState({
+// //       name: response.data.name,
+// //     });
+// //   });
+
+//   // By returning { props: { posts } }, the Blog component
+//   // will receive `posts` as a prop at build time
+//   return {
+//     props: {
+//       data,
+//     },
+//   };
+// }
+
+
+
+// server side
+
+// This gets called on every request
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/pikachu`)
+  const data = await res.json()
+
+  // Pass data to the page via props
+  return { props: { data } }
 }
