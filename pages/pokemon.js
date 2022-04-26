@@ -1,5 +1,4 @@
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -19,7 +18,7 @@ export default function About({data}) {
 
   
   return (
-    <div className={styles.container}>
+    <div className='container'>
       <Head>
         <title>Pokemon - Nextjs course</title>
         <meta name="description" content="Next JS course" />
